@@ -5,7 +5,7 @@ Visual Studio Project Setup Properties:
 - Linker/General/Additional Library Directories: $(SolutionDir)Dependencies\GLFW\lib-vc2019
 - Linker/Input/Additional Dependencies: glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib
 
----------------------------------------------------A Very Informal Self-Note---------------------------------------------------------------
+---------------------------------------------------A Very Informal Self-Note------------------------------------------------------------
 
 OpenGL ~ A rendering API
 OpenGL functions are not what u download, its stuff are actually in your graphic drivers. 
