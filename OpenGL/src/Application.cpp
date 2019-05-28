@@ -30,17 +30,22 @@ int main(void)
 		std::cout << "Error!" << std::endl;
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
+	float positions[6] = {
+		-0.5f, -0.5f, 0.0f,   0.5f, 0.5f, -0.5f
+	};
+
+	unsigned int buffer; //buffer id
+	glGenBuffers(1, &buffer); //1 = no of buffers required. Generate Buffer
+	glBindBuffer(GL_ARRAY_BUFFER, buffer); //bind the buffer
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*6, positions, GL_STATIC_DRAW); //creates and initializes a buffer object's data store
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-		glBegin(GL_TRIANGLES);
-		glVertex2f(-0.5f, -0.5f);
-		glVertex2f( 0.0f,   0.5f);
-		glVertex2f( 0.5f, -0.5f);
-		glEnd();
+		glDrawArrays(GL_TRIANGLES, 0, 3); //draw the triangle
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
