@@ -24,4 +24,11 @@ First you need to create a valid OpenGL rendering context and call glewInit() to
 
 
 - Dependencies/GLEW/lib/Release/Win32
- Both libs are static libraries, but glew32.lib is used if u want to link w/ the DLL, glew32s.lib is used to link w/ just the static lib 
+Both libs are static libraries, but glew32.lib is used if u want to link w/ the DLL, glew32s.lib is used to link w/ just the static lib 
+
+- Vertex Buffer & layout :
+Basically a buffer of memory that's stored on the GPU, so when the program/the shader actually starts to read that vertex buffer it needs to know the layout of that buffer. What is actually contained in the buffer ? --> just a bunch of floats which dictate the position of each vertex, do u also have texture coordinates, normals, etc... Have to actually tell OpenGL what is in the memory and how is its layout (i.e, like, what is its type).   
+
+Stride: offset/amount of bytes between consecutive vertex attributes: i.e, size of a vertex attribute. 
+
+!! To enable and disable a generic vertex attribute array, call glEnableVertexAttribArray and glDisableVertexAttribArray with index.
