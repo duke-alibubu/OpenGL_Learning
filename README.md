@@ -32,3 +32,16 @@ Basically a buffer of memory that's stored on the GPU, so when the program/the s
 Stride: offset/amount of bytes between consecutive vertex attributes: i.e, size of a vertex attribute. 
 
 !! To enable and disable a generic vertex attribute array, call glEnableVertexAttribArray and glDisableVertexAttribArray with index.
+
+- Shader:
+
+A program that runs on your GPU.
+We need to be able to program the GPU.
+Because even in the form of drawing the simplest form, I still want to be able to tell the GPU how to to draw that triangle ?Like, where do the vertex positions go, what color should the triangle be, how should it be drawn, v..v 
+We need to tell the GPU what to do with the data we've sent it --> What a shader fundamentally is.
+
+- The rendering pipeline: https://www.geeksforgeeks.org/opengl-rendering-pipeline-overview/
+
+- Vertex Shader and Fragment Shader - 2 main types of shader : 
+ + Vertex Shader: get called for every vertex that we are trying to render. Primary purpose: tell OpenGL where u want that vertex to be in your screen space. 
+ + Fragment Shader a.k.a Pixel Shader: run once for every pixel that needs to be rasterized. [Rasterisation is the task of taking an image described in a vector graphics format (shapes) and converting it into a raster image (a series of pixels, dots or lines, which, when displayed together, create the image which was represented via shapes).] Decide what color each pixel should be.  
