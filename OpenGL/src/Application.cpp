@@ -2,6 +2,50 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+struct ShaderProgramSource
+{
+	std::string VertexSource;
+	std::string FragmentSource;
+};
+
+static ShaderProgramSource parseShader(const std::string& filepath)
+{
+	std::ifstream stream(filepath);
+	
+	enum class ShaderType
+	{
+		NONE = -1, VERTEX = 0, FRAGMENT = 1
+	};
+
+	std::stringstream ss[2];
+	ShaderType type = ShaderType::NONE;
+
+	std::string line;
+	while (getline(stream, line))
+	{
+		if (line.find("#shader") != std::string::npos)  //invalid string position
+		{        
+			if (line.find("vertex") != std::string::npos)       //set mode to vertex
+			{
+				type = ShaderType::VERTEX;
+			}
+			else if (line.find("fragment") != std::string::npos)       //set mode to fragment
+			{
+				type = ShaderType::FRAGMENT;
+			}
+		}
+		else
+		{
+			ss[(int)type] << line << "\n";
+		}
+	}
+
+	return { ss[0].str(), ss[1].str()};
+}
 
 static unsigned int compileShader(const std::string& source, unsigned int type)
 {
@@ -83,25 +127,8 @@ int main(void)
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float)*2, 0);         //2: cause 1 vertex takes 2 float - vec2
 
-	std::string vertexShader =
-		"#version 330 core\n"
-		"\n"
-		"layout(location = 0) in vec4 position;\n"        //0 is the INDEX of our attribute. Vec4 is because OpenGL position is eventually a vec4
-		"\n"
-		"void main()\n"
-		"{\n"
-		"	gl_Position = position;\n"
-		"}\n";
-	std::string fragmentShader =
-		"#version 330 core\n"
-		"\n"
-		"layout(location = 0) out vec4 color;\n"        //0 is the INDEX of our attribute. Vec4 is because OpenGL position is eventually a vec4
-		"\n"
-		"void main()\n"
-		"{\n"
-		"	color = vec4(1.0, 0.5 , 0.2 , 1.0);\n"    //color is actually float between 0 and 1 - 0:B, 1:W
-		"}\n";
-	unsigned int shader = createShader(vertexShader, fragmentShader);
+	ShaderProgramSource source = parseShader("res/shaders/Basic.shader");
+	unsigned int shader = createShader(source.VertexSource, source.FragmentSource);
 	glUseProgram(shader);
 
     /* Loop until the user closes the window */
