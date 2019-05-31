@@ -43,5 +43,12 @@ We need to tell the GPU what to do with the data we've sent it --> What a shader
 - The rendering pipeline: https://www.geeksforgeeks.org/opengl-rendering-pipeline-overview/
 
 - Vertex Shader and Fragment Shader - 2 main types of shader : 
- + Vertex Shader: get called for every vertex that we are trying to render. Primary purpose: tell OpenGL where u want that vertex to be in your screen space. 
- + Fragment Shader a.k.a Pixel Shader: run once for every pixel that needs to be rasterized. [Rasterisation is the task of taking an image described in a vector graphics format (shapes) and converting it into a raster image (a series of pixels, dots or lines, which, when displayed together, create the image which was represented via shapes).] Decide what color each pixel should be. 
+  Vertex Shader: get called for every vertex that we are trying to render. Primary purpose: tell OpenGL where u want that vertex to be in your screen space. 
+  Fragment Shader a.k.a Pixel Shader: run once for every pixel that needs to be rasterized. [Rasterisation is the task of taking an image described in a vector graphics format (shapes) and converting it into a raster image (a series of pixels, dots or lines, which, when displayed together, create the image which was represented via shapes).] Decide what color each pixel should be. 
+
+Everything is like, made of triangles. A square can be made by putting 2 triangles tgt.
+
+- Index Buffer:
+Allow us to use existing vertices.
+
+- EVERY BUFFER HAS TO BE MADE UP OF UNSIGNED INT, NOT INT
