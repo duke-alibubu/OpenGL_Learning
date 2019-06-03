@@ -12,6 +12,19 @@ struct ShaderProgramSource
 	std::string FragmentSource;
 };
 
+static void clearError()
+{
+	while (glGetError() != GL_NO_ERROR);
+}
+
+static void checkError()
+{
+	while (GLenum error = glGetError())
+	{
+		std::cout << "[OpenGL_Error] (" << error << ")" << std::endl;
+	}
+}
+
 static ShaderProgramSource parseShader(const std::string& filepath)
 {
 	std::ifstream stream(filepath);
@@ -152,9 +165,12 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); //draw the triangle. 6 = number of indices. Nullptr cause we have 
+		clearError();
+		glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr); //draw the triangle. 6 = number of indices. Nullptr cause we have 
 																   //alr bounded ibo to GL_ELEMENT_ARRAY_BUFFER
 																   //If did not bound ibo to GL_ELEMENT_ARRAY_BUFFER have to specify "indices"
+																   //Have to be unsigned int, because buffer's made up of unsigned int					
+		checkError();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

@@ -51,4 +51,16 @@ Everything is like, made of triangles. A square can be made by putting 2 triangl
 - Index Buffer:
 Allow us to use existing vertices.
 
+
+Later should use index buffer & glDrawElements often, rather than glDrawArrays. 
+
 - EVERY BUFFER HAS TO BE MADE UP OF UNSIGNED INT, NOT INT
+
+-----------------------------ERROR CHECKING IN OPENGL-----------------------------------------------------------------------
+
+2 main ways to check error in OpenGL :
+- glGetError(): A callable function. However, this func. is only able to return a "flag" of the most recent error --> In case off multiple errors, have to call it multiple times.    
+If more than one flag has recorded an error, glGetError() returns and clears an arbitrary error flag value. Thus, glGetError() should always be called in a loop, until it returns GL_NO_ERROR, if all error flags are to be reset.
+
+This function should return an error code in int --> E.g; 1280. Actual error code in the header files is in hexadecimal: So, 1280 -> 0x0500. Search for the error code in the header file <glew.h>. 
+- glDebugMessageCallback() : A new func only in GL 4.3 and above, but is generally better. 
