@@ -56,7 +56,7 @@ Later should use index buffer & glDrawElements often, rather than glDrawArrays.
 
 - EVERY BUFFER HAS TO BE MADE UP OF UNSIGNED INT, NOT INT
 
------------------------------ERROR CHECKING IN OPENGL-----------------------------------------------------------------------
+-------------------------------------ERROR CHECKING IN OPENGL---------------------------------------------------------------------------
 
 2 main ways to check error in OpenGL :
 - glGetError(): A callable function. However, this func. is only able to return a "flag" of the most recent error --> In case off multiple errors, have to call it multiple times.    
@@ -64,3 +64,7 @@ If more than one flag has recorded an error, glGetError() returns and clears an 
 
 This function should return an error code in int --> E.g; 1280. Actual error code in the header files is in hexadecimal: So, 1280 -> 0x0500. Search for the error code in the header file <glew.h>. 
 - glDebugMessageCallback() : A new func only in GL 4.3 and above, but is generally better. 
+
+----------------------------------------------Uniform in OpenGL------------------------------------------------------------------------
+- A way to actually get data from the CPU side into our shader so that we can actually use it like a variable
+- Uniform are set per draw, while attribute is set to per vertex.

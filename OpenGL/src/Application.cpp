@@ -124,6 +124,8 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+	glfwSwapInterval(1);
+
 	if (glewInit() != GLEW_OK)
 		std::cout << "Error!" << std::endl;
 	std::cout << glGetString(GL_VERSION) << std::endl;
@@ -142,7 +144,7 @@ int main(void)
 
 	unsigned int buffer; //buffer id
 	glGenBuffers(1, &buffer); //1 = no of buffers required. Generate Buffer
-	glBindBuffer(GL_ARRAY_BUFFER, buffer); //bind the buffer
+	glBindBuffer(GL_ARRAY_BUFFER, buffer); //bind the buffer - In this case, vertex attribute buffer
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* 8 , positions, GL_STATIC_DRAW); //creates and initializes a buffer object's data store
 
 	glEnableVertexAttribArray(0);
@@ -159,18 +161,29 @@ int main(void)
 	unsigned int shader = createShader(source.VertexSource, source.FragmentSource);
 	glUseProgram(shader);
 
+	int location = glGetUniformLocation(shader, "u_Color");    //retrieve the location of the color variable? 
+	glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f);
+	
+	float r = 0.2f;
+	float increment = 0.05f;
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-		clearError();
-		glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr); //draw the triangle. 6 = number of indices. Nullptr cause we have 
+		glUniform4f(location, r, 0.3f, 0.8f, 1.0f);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); //draw the triangle. 6 = number of indices. Nullptr cause we have 
 																   //alr bounded ibo to GL_ELEMENT_ARRAY_BUFFER
 																   //If did not bound ibo to GL_ELEMENT_ARRAY_BUFFER have to specify "indices"
 																   //Have to be unsigned int, because buffer's made up of unsigned int					
-		checkError();
+		if (r > 1.0f)
+			increment = -0.05f;
+		else if (r < 0.0f)
+			increment = 0.05f;
+		
+		r += increment;
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
