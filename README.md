@@ -68,3 +68,5 @@ This function should return an error code in int --> E.g; 1280. Actual error cod
 ----------------------------------------------Uniform in OpenGL------------------------------------------------------------------------
 - A way to actually get data from the CPU side into our shader so that we can actually use it like a variable
 - Uniform are set per draw, while attribute is set to per vertex.
+----------------------------------------------Vertex Arrays----------------------------------------------------------------------------
+- A way to bind vertex buffers with a certain 'specification' for the layout of that actual vertex buffer.
