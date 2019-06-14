@@ -118,8 +118,11 @@ int main(void)
         return -1;
     }
 
-	
-
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //i want my major version to be OpenGL 3 
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); //minor version to be 3 also
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //generate a core profile!!! IMPORTANT 
+	// if we use core -- we have to created one ourself.
+	// compatibility profile -- the default one.
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
@@ -142,13 +145,19 @@ int main(void)
 		2, 3, 0	         //triangle 2
 	};
 
+
+	unsigned int vao;    //vertex array object
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
 	unsigned int buffer; //buffer id
 	glGenBuffers(1, &buffer); //1 = no of buffers required. Generate Buffer
 	glBindBuffer(GL_ARRAY_BUFFER, buffer); //bind the buffer - In this case, vertex attribute buffer
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* 8 , positions, GL_STATIC_DRAW); //creates and initializes a buffer object's data store
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float)*2, 0);         //2: cause 1 vertex takes 2 float - vec2
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float)*2, 0);         //2: cause 1 vertex takes 2 float - vec2. VERTEX LAYOUT
+	// link the buffer to the VAO 
 
 	//index buffer
 	unsigned int ibo; //index buffer object
@@ -163,6 +172,12 @@ int main(void)
 
 	int location = glGetUniformLocation(shader, "u_Color");    //retrieve the location of the color variable? 
 	glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f);
+
+	//unbind everything
+	glBindVertexArray(0);
+	glUseProgram(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
 	float r = 0.2f;
 	float increment = 0.05f;
@@ -173,7 +188,14 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
+		//what is here! we bind our shader, we set up our uniform, we bind our vertex buffer - set up the layout of that vertex buffer and then bind the index buffer!
+		glUseProgram(shader);
 		glUniform4f(location, r, 0.3f, 0.8f, 1.0f);
+		
+		glBindVertexArray(vao);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+
+		
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); //draw the triangle. 6 = number of indices. Nullptr cause we have 
 																   //alr bounded ibo to GL_ELEMENT_ARRAY_BUFFER
 																   //If did not bound ibo to GL_ELEMENT_ARRAY_BUFFER have to specify "indices"
