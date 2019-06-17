@@ -6,24 +6,17 @@
 #include <string>
 #include <sstream>
 
+#include "Renderer.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+
+
 struct ShaderProgramSource
 {
 	std::string VertexSource;
 	std::string FragmentSource;
 };
 
-static void clearError()
-{
-	while (glGetError() != GL_NO_ERROR);
-}
-
-static void checkError()
-{
-	while (GLenum error = glGetError())
-	{
-		std::cout << "[OpenGL_Error] (" << error << ")" << std::endl;
-	}
-}
 
 static ShaderProgramSource parseShader(const std::string& filepath)
 {
@@ -150,20 +143,15 @@ int main(void)
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	unsigned int buffer; //buffer id
-	glGenBuffers(1, &buffer); //1 = no of buffers required. Generate Buffer
-	glBindBuffer(GL_ARRAY_BUFFER, buffer); //bind the buffer - In this case, vertex attribute buffer
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* 8 , positions, GL_STATIC_DRAW); //creates and initializes a buffer object's data store
+	VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float)*2, 0);         //2: cause 1 vertex takes 2 float - vec2. VERTEX LAYOUT
 	// link the buffer to the VAO 
 
 	//index buffer
-	unsigned int ibo; //index buffer object
-	glGenBuffers(1, &ibo); //1 = no of buffers required. Generate Buffer
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo); //bind the buffer
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 6, indices, GL_STATIC_DRAW);
+	IndexBuffer ib(indices, 6);
 
 
 	ShaderProgramSource source = parseShader("res/shaders/Basic.shader");
@@ -193,7 +181,7 @@ int main(void)
 		glUniform4f(location, r, 0.3f, 0.8f, 1.0f);
 		
 		glBindVertexArray(vao);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+		ib.bind();
 
 		
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); //draw the triangle. 6 = number of indices. Nullptr cause we have 
@@ -213,6 +201,8 @@ int main(void)
         /* Poll for and process events */
         glfwPollEvents();
     }
+
+	glDeleteProgram(shader);
 
     glfwTerminate();
     return 0;
