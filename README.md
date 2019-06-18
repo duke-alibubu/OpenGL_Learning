@@ -85,3 +85,8 @@ This function should return an error code in int --> E.g; 1280. Actual error cod
 
 -------------------------------------------Abstracting into classes----------------------------------------------------------------
 - Assumptions (in this repo ONLY) : size refers to byte, count means element count. 
+- What's required for a shader class:
+ 1. Pass in a file or a string & compile it as a shader
+ 2. Able to bind & unbind the shader
+ 3. Able to set the uniforms
+ 
