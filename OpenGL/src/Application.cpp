@@ -11,6 +11,8 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Renderer.h"
+#include "VertexBufferLayout.h"
 
 
 int main(void)
@@ -77,6 +79,8 @@ int main(void)
 	vb.unbind();
 	ib.unbind();
 	shader.unbind();
+
+	Renderer renderer;
 	
 	float r = 0.2f;
 	float increment = 0.05f;
@@ -85,21 +89,14 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
+		renderer.clear();
 
 		//what is here! we bind our shader, we set up our uniform, we bind our vertex buffer - set up the layout of that vertex buffer and then bind the index buffer!
 		shader.bind();
-
 		shader.setUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
-		
-		va.bind();
-		ib.bind();
 
-		
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); //draw the triangle. 6 = number of indices. Nullptr cause we have 
-																   //alr bounded ibo to GL_ELEMENT_ARRAY_BUFFER
-																   //If did not bound ibo to GL_ELEMENT_ARRAY_BUFFER have to specify "indices"
-																   //Have to be unsigned int, because buffer's made up of unsigned int					
+		renderer.draw(va, ib, shader);
+						
 		if (r > 1.0f)
 			increment = -0.05f;
 		else if (r < 0.0f)
