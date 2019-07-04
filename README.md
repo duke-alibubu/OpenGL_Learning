@@ -1,16 +1,17 @@
 # OpenGL_Learning
-# http://docs.gl/
-# https://www3.ntu.edu.sg/home/ehchua/programming/opengl/CG_Introduction.html
-# http://www.ntu.edu.sg/home/ehchua/programming/opengl/CG_examples.html
-# https://www.ntu.edu.sg/home/ehchua/programming/opengl/cg_basicstheory.html
+### References
+http://docs.gl/
+https://www3.ntu.edu.sg/home/ehchua/programming/opengl/CG_Introduction.html
+http://www.ntu.edu.sg/home/ehchua/programming/opengl/CG_examples.html
+https://www.ntu.edu.sg/home/ehchua/programming/opengl/cg_basicstheory.html
 
-Visual Studio Project Setup Properties: (All Configurations && Win32)
+### Visual Studio Project Setup Properties: (All Configurations && Win32)
 - C++/General/Additional Include Directories: $(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include
 - Linker/General/Additional Library Directories: $(SolutionDir)Dependencies\GLEW\lib\Release\Win32;$(SolutionDir)Dependencies\GLFW\lib-vc2019
 - Linker/Input/Additional Dependencies: glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib
 - Define GLEW_STATIC in preprocessor definitions (Defines a preprocessing symbol for a source file): C++/Preprocessor/Preporcessor Definitions: GLEW_STATIC
 
----------------------------------------------------A Very Informal Self-Note--------------------------------------------------------
+### A Very Informal Self-Note
 
 - OpenGL ~ A rendering API
 
@@ -59,7 +60,7 @@ Later should use index buffer & glDrawElements often, rather than glDrawArrays.
 
 - EVERY BUFFER HAS TO BE MADE UP OF UNSIGNED INT, NOT INT
 
--------------------------------------ERROR CHECKING IN OPENGL-----------------------------------------------------------------------
+### ERROR CHECKING IN OPENGL
 
 2 main ways to check error in OpenGL :
 - glGetError(): A callable function. However, this func. is only able to return a "flag" of the most recent error --> In case off multiple errors, have to call it multiple times.    
@@ -68,11 +69,11 @@ If more than one flag has recorded an error, glGetError() returns and clears an 
 This function should return an error code in int --> E.g; 1280. Actual error code in the header files is in hexadecimal: So, 1280 -> 0x0500. Search for the error code in the header file <glew.h>. 
 - glDebugMessageCallback() : A new func only in GL 4.3 and above, but is generally better. 
 
-----------------------------------------------Uniform in OpenGL------------------------------------------------------------------
+### Uniform in OpenGL
 - A way to actually get data from the CPU side into our shader so that we can actually use it like a variable
 - Uniform are set per draw, while attribute is set to per vertex.
 
-----------------------------------------------Vertex Arrays-----------------------------------------------------------------------
+### Vertex Arrays
 - A way to bind vertex buffers with a certain 'specification' for the layout of that actual vertex buffer.
 - Bind that vertex specification that we specified by using the vertex attribute pointer to an actual vertex buffer (or a series of vertex buffers) depending on how we actually organized this. So, instead of us having to actually explicitly specify the vertex layout everytime before we draw ....
 - Basically we need to bind our vertex buffer, bind our index buffer and then draw our actual object. But also, after we bind our vertex buffer we also need to actually specify that layout 
@@ -83,7 +84,7 @@ This function should return an error code in int --> E.g; 1280. Actual error cod
 - When we bind a vertex array, and we bind a buffer, nothing actually links the two. But when we specify the vertex attribute pointer, we actually link them tgt. 
 - So, now, u can : for every piece of geometry that u create, u create a vertex array obj., then u specify the layout once so you enable any vertex attribute array you need as many times as u need to set up all of the stuffs. (Ofc u need to bind the vertex buffer as well before u do all that). And then, when it comes time to draw u just bind a different vertex array object (Basically everytime u draw your geometry) and then u bind an index buffer and then issue the draw call. TO SUM UP: 1. << Have one global VAO for the entire program & then u bind different buffers and vertex layout specification everytime >> or 2. << Have a separate VAO for each piece of geometry. >>
 
--------------------------------------------Abstracting into classes----------------------------------------------------------------
+### Abstracting into classes
 - Assumptions (in this repo ONLY) : size refers to byte, count means element count. 
 - What's required for a shader class:
  1. Pass in a file or a string & compile it as a shader
