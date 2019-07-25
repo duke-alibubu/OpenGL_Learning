@@ -1,9 +1,9 @@
 # OpenGL_Learning
 ### References
-http://docs.gl/
-https://www3.ntu.edu.sg/home/ehchua/programming/opengl/CG_Introduction.html
-http://www.ntu.edu.sg/home/ehchua/programming/opengl/CG_examples.html
-https://www.ntu.edu.sg/home/ehchua/programming/opengl/cg_basicstheory.html
+- ```http://docs.gl/```
+- ```https://www3.ntu.edu.sg/home/ehchua/programming/opengl/CG_Introduction.html```
+- ```http://www.ntu.edu.sg/home/ehchua/programming/opengl/CG_examples.html```
+- ```https://www.ntu.edu.sg/home/ehchua/programming/opengl/cg_basicstheory.html```
 
 ### Visual Studio Project Setup Properties: (All Configurations && Win32)
 - C++/General/Additional Include Directories: $(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include
@@ -44,7 +44,7 @@ We need to be able to program the GPU.
 Because even in the form of drawing the simplest form, I still want to be able to tell the GPU how to to draw that triangle ?Like, where do the vertex positions go, what color should the triangle be, how should it be drawn, v..v 
 We need to tell the GPU what to do with the data we've sent it --> What a shader fundamentally is.
 
-- The rendering pipeline: https://www.geeksforgeeks.org/opengl-rendering-pipeline-overview/
+- The rendering pipeline: ```https://www.geeksforgeeks.org/opengl-rendering-pipeline-overview/```
 
 - Vertex Shader and Fragment Shader - 2 main types of shader : 
   Vertex Shader: get called for every vertex that we are trying to render. Primary purpose: tell OpenGL where u want that vertex to be in your screen space. 
