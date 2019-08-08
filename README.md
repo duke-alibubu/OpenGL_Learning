@@ -24,7 +24,7 @@ Modern OpenGL has a lot of functions. There are few problems: They might not be 
 
 - INITIALIZING GLEW
 
-First you need to create a valid OpenGL rendering context and call glewInit() to initialize the extension entry points. If glewInit() returns GLEW_OK, the initialization succeeded and you can use the available extensions as well as core OpenGL functionality.(You can't use OpenGL function from GLEW until u call GLEw in it)
+First you need to create a valid OpenGL rendering context and call ```glewInit()``` to initialize the extension entry points. If glewInit() returns GLEW_OK, the initialization succeeded and you can use the available extensions as well as core OpenGL functionality.(You can't use OpenGL function from GLEW until u call ```glewInit()```)
 
 
 - Dependencies/GLEW/lib/Release/Win32
