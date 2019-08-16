@@ -13,6 +13,7 @@
 #include "Shader.h"
 #include "Renderer.h"
 #include "VertexBufferLayout.h"
+#include "Texture.h"
 
 
 int main(void)
@@ -47,10 +48,10 @@ int main(void)
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
 	float positions[] = {
-		-0.5f, -0.5f,   //0
-		 0.5f, -0.5f,   //1
-		 0.5f,  0.5f,   //2
-		-0.5f, 0.5f    //3
+		-0.5f, -0.5f, 0.0f, 0.0f,   //0
+		 0.5f, -0.5f, 1.0f, 0.0f,  //1
+		 0.5f,  0.5f, 1.0f, 1.0f,  //2
+		-0.5f,  0.5f, 0.0f, 1.0f    //3
 	};
 
 	unsigned int indices[] = {
@@ -58,9 +59,13 @@ int main(void)
 		2, 3, 0	         //triangle 2
 	};
 
-	VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	VertexBuffer vb(positions, 4 * 4 * sizeof(float));        //4 float per vertex
 	VertexArray va;
 	VertexBufferLayout layout;
+	layout.push<float>(2);
 	layout.push<float>(2);
 	va.addBuffer(vb, layout);
 	//va.bind();
@@ -75,6 +80,11 @@ int main(void)
 
 	shader.setUniform4f("u_Color" ,0.2f, 0.3f, 0.8f, 1.0f);
 	//unbind everything
+
+	Texture texture("res/Textures/Dragon.png");
+	texture.bind();   //if bind 2 - which means slot 2 - need to set uniform location to slot 2 also
+	shader.setUniform1i("u_Texture", 0);   //0 becuz we bound our texture to slot 0 by default
+
 	va.unbind();
 	vb.unbind();
 	ib.unbind();
