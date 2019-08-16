@@ -95,6 +95,20 @@ This function should return an error code in int --> E.g; 1280. Actual error cod
  - **REMINDER:** We would need to call ```stbi_set_flip_vertically_on_load``` to flip upside - down before actually drawing because OpenGL actually expects our texture to start from the BOTTOM LEFT - not the TOP LEFT (So, the bottom left in OpenGL is actually (0,0)). - Using ```glTexParameteri```: Need to specify ```GL_TEXTURE_MIN_FILTER```, ```GL_TEXTURE_MAG_FILTER```, ```GL_TEXTURE_WRAP_S```, ```GL_TEXTURE_WRAP_T```(Details in Texture.cpp, commit "Texture". 
  - We also need to tell the shader which texture slot to sample from & the way we do that is via a uniform. To be more precise: Send an integer uniform to our shader & that integer is the slot that we've bound a texture to - that we want to sample from. 
  
+### Blending
+ - Blending determines how we combine our OUTPUT COLOR with what is already in our TARGET BUFFER.
+  + Output: The color we output from fragment shader (known as *source*).
+  + Target buffer: The buffer our fragment shader is drawing to (known as *destination*).
+ - How do we control blending:
+  + glEnable(GL_BLEND) - glDisable(Gl_BLEND)
+  + glBlendFunc(src, dest):
+     src = how the src RGBA factor is computed (default is GL_ONE)
+     dest = how the dest RGBA factor is computed (default is GL_ZERO)
+  + glBlendEquation(mode):
+     mode: how we combine the src & dest colors. Default value is GL_FUNC_AND.
+    
+  (So this mean, by default is src x 1 + des x 0 = src)
+ - What we do when we perform our blending equation is we take each color channel of the source RGBA and the dest RGBA. Every color channel we take that actual value and we multiply it with the RGBA factor. 
 ### Abstracting into classes
 - Assumptions (in this repo ONLY) : size refers to byte, count means element count. 
 - What's required for a shader class:
