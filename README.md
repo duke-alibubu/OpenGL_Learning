@@ -109,6 +109,11 @@ This function should return an error code in int --> E.g; 1280. Actual error cod
     
   (So this mean, by default is src x 1 + des x 0 = src)
  - What we do when we perform our blending equation is we take each color channel of the source RGBA and the dest RGBA. Every color channel we take that actual value and we multiply it with the RGBA factor. 
+
+### Maths
+- OpenGL Maths lib: ```https://github.com/g-truc/glm```.
+- 
+ 
 ### Abstracting into classes
 - Assumptions (in this repo ONLY) : size refers to byte, count means element count. 
 - What's required for a shader class:
