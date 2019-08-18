@@ -6,7 +6,7 @@
 - ```https://www.ntu.edu.sg/home/ehchua/programming/opengl/cg_basicstheory.html```
 
 ### Visual Studio Project Setup Properties: (All Configurations && Win32)
-- C++/General/Additional Include Directories: $(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include
+- C++/General/Additional Include Directories: src/vendor;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include
 - Linker/General/Additional Library Directories: $(SolutionDir)Dependencies\GLEW\lib\Release\Win32;$(SolutionDir)Dependencies\GLFW\lib-vc2019
 - Linker/Input/Additional Dependencies: glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib
 - Define GLEW_STATIC in preprocessor definitions (Defines a preprocessing symbol for a source file): C++/Preprocessor/Preporcessor Definitions: GLEW_STATIC
@@ -112,7 +112,8 @@ This function should return an error code in int --> E.g; 1280. Actual error cod
 
 ### Maths
 - OpenGL Maths lib: ```https://github.com/g-truc/glm```.
-- 
+- Need to include ```src/vendor/glm```. Exclude ```dummy.cpp``` if available.
+- An orthographic matrix is essentially used to map matrix from 3D back to 2D...
  
 ### Abstracting into classes
 - Assumptions (in this repo ONLY) : size refers to byte, count means element count. 
