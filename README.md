@@ -6,7 +6,7 @@
 - ```https://www.ntu.edu.sg/home/ehchua/programming/opengl/cg_basicstheory.html```
 
 ### Visual Studio Project Setup Properties: (All Configurations && Win32)
-- C++/General/Additional Include Directories: $(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include
+- C++/General/Additional Include Directories: src/vendor;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include
 - Linker/General/Additional Library Directories: $(SolutionDir)Dependencies\GLEW\lib\Release\Win32;$(SolutionDir)Dependencies\GLFW\lib-vc2019
 - Linker/Input/Additional Dependencies: glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib
 - Define GLEW_STATIC in preprocessor definitions (Defines a preprocessing symbol for a source file): C++/Preprocessor/Preporcessor Definitions: GLEW_STATIC
@@ -94,6 +94,26 @@ This function should return an error code in int --> E.g; 1280. Actual error cod
  - In OpenGL we have VARIOUS slots that you can bind textures to and the reason of that is because we can bind more than one texture at once (number of slots might depend on the GPU that u have...) 
  - **REMINDER:** We would need to call ```stbi_set_flip_vertically_on_load``` to flip upside - down before actually drawing because OpenGL actually expects our texture to start from the BOTTOM LEFT - not the TOP LEFT (So, the bottom left in OpenGL is actually (0,0)). - Using ```glTexParameteri```: Need to specify ```GL_TEXTURE_MIN_FILTER```, ```GL_TEXTURE_MAG_FILTER```, ```GL_TEXTURE_WRAP_S```, ```GL_TEXTURE_WRAP_T```(Details in Texture.cpp, commit "Texture". 
  - We also need to tell the shader which texture slot to sample from & the way we do that is via a uniform. To be more precise: Send an integer uniform to our shader & that integer is the slot that we've bound a texture to - that we want to sample from. 
+ 
+### Blending
+ - Blending determines how we combine our OUTPUT COLOR with what is already in our TARGET BUFFER.
+  + Output: The color we output from fragment shader (known as *source*).
+  + Target buffer: The buffer our fragment shader is drawing to (known as *destination*).
+ - How do we control blending:
+  + glEnable(GL_BLEND) - glDisable(Gl_BLEND)
+  + glBlendFunc(src, dest):
+     src = how the src RGBA factor is computed (default is GL_ONE)
+     dest = how the dest RGBA factor is computed (default is GL_ZERO)
+  + glBlendEquation(mode):
+     mode: how we combine the src & dest colors. Default value is GL_FUNC_AND.
+    
+  (So this mean, by default is src x 1 + des x 0 = src)
+ - What we do when we perform our blending equation is we take each color channel of the source RGBA and the dest RGBA. Every color channel we take that actual value and we multiply it with the RGBA factor. 
+
+### Maths
+- OpenGL Maths lib: ```https://github.com/g-truc/glm```.
+- Need to include ```src/vendor/glm```. Exclude ```dummy.cpp``` if available.
+- An orthographic matrix is essentially used to map matrix from 3D back to 2D...
  
 ### Abstracting into classes
 - Assumptions (in this repo ONLY) : size refers to byte, count means element count. 
