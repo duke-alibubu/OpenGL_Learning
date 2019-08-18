@@ -15,6 +15,8 @@
 #include "VertexBufferLayout.h"
 #include "Texture.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 int main(void)
 {
@@ -75,13 +77,16 @@ int main(void)
 	//index buffer
 	IndexBuffer ib(indices, 6);
 
+	glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);     //By default on a 4:3 ratio --> Set it to 1:1
+		 
 	Shader shader("res/shaders/Basic.shader");
 	shader.bind();
 
-	shader.setUniform4f("u_Color" ,0.2f, 0.3f, 0.8f, 1.0f);
+	shader.setUniform4f("u_Color" ,0.2f, 0.3f, 0.8f, 1.0f); 
+	shader.setUniformMat4f("u_MVP", proj);
 	//unbind everything
 
-	Texture texture("res/Textures/Dragon.png");
+	Texture texture("res/Textures/Tree.png");
 	texture.bind();   //if bind 2 - which means slot 2 - need to set uniform location to slot 2 also
 	shader.setUniform1i("u_Texture", 0);   //0 becuz we bound our texture to slot 0 by default
 

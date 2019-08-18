@@ -118,6 +118,12 @@ void Shader::setUniform1i(const std::string & name, int value)
 	glUniform1i(getUniformLocation(name), value);
 }
 
+void Shader::setUniformMat4f(const std::string & name, const glm::mat4 & matrix)
+{
+	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);   //fv ~~ float array
+	//if your matrix is a row major matrix - not by the column by GLM does, either transpose it ourself or set the pass in the transpose params to true
+}
+
 int Shader::getUniformLocation(const std::string& name)
 {
 	if (m_LocationCache.find(name) != m_LocationCache.end())
